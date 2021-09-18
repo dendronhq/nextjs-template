@@ -8,6 +8,7 @@ import DendronLogoOrTitle from "./DendronLogoOrTitle";
 import { DendronLookup } from "./DendronLookup";
 import { FooterText } from "./DendronNoteFooter";
 import DendronTreeMenu from "./DendronTreeMenu";
+import { DendronSearch } from "./DendronSearch";
 
 const { Header, Content, Sider, Footer } = Layout;
 const { LAYOUT, HEADER, SIDER } = DENDRON_STYLE_CONSTANTS;
@@ -45,7 +46,7 @@ export default function DendronLayout(
             className="ant-trigger"
             style={{
               backgroundColor:
-                "#43B02A" /* color copied from packages/dendron-next-server/assets/themes/light-theme.less TODO make dependent on active theme */,
+                "#43B02A" /* color copied from dendron-next-server / assets/themes/light-theme.less TODO make dependent on active theme */,
             }}
           >
             {isCollapsed ? <RightOutlined /> : <LeftOutlined />}
@@ -92,15 +93,39 @@ export default function DendronLayout(
           width: "100%",
           borderBottom: "1px solid #d4dadf",
           height: HEADER.HEIGHT,
-          padding: `0 ${LAYOUT.PADDING}px`,
+          padding: `0 ${LAYOUT.PADDING}px 0 2`,
         }}
       >
-        <Row style={{ height: "100%" }}>
-          <Col xs={{ span: 4 }} md={{ span: 4 }} style={{ height: "100%" }}>
+        <Row
+          style={{
+            flex: "0 0 auto",
+            paddingLeft: `calc((100% - ${LAYOUT.BREAKPOINTS.lg}) / 2)`,
+            height: HEADER.HEIGHT,
+          }}
+        >
+          <Col
+            xs={4}
+            md={4}
+            style={{
+              width: `calc((100% - ${LAYOUT.BREAKPOINTS.lg}) / 2 + ${
+                isCollapsed ? SIDER.COLLAPSED_WIDTH : SIDER.WIDTH
+              }px)`,
+              minWidth: isCollapsed ? SIDER.COLLAPSED_WIDTH : SIDER.WIDTH,
+            }}
+          >
             <DendronLogoOrTitle />
           </Col>
-          <Col xs={18} md={{ span: 16 }}>
+          <Col xs={8} sm={10} md={10} lg={10} style={{ paddingLeft: "4px" }}>
             <DendronLookup {...props} />
+          </Col>
+          <Col
+            xs={6}
+            sm={8}
+            md={8}
+            lg={6}
+            style={{ marginLeft: "4px", marginRight: "4px" }}
+          >
+            <DendronSearch {...props} />
           </Col>
         </Row>
       </Header>

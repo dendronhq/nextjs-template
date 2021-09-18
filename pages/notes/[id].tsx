@@ -13,16 +13,45 @@ import {
 import { useRouter } from "next/router";
 import React from "react";
 import DendronSEO from "../../components/DendronSEO";
+import DendronCustomHead from "../../components/DendronCustomHead";
 import DendronSpinner from "../../components/DendronSpinner";
+import {
+  DendronCollectionItem,
+  prepChildrenForCollection,
+} from "../../components/DendronCollection";
 import { useCombinedDispatch, useCombinedSelector } from "../../features";
 import { browserEngineSlice } from "../../features/engine";
-import { getNoteBody, getNoteMeta, getNotes } from "../../utils/build";
+import {
+  getConfig,
+  getCustomHead,
+  getNoteBody,
+  getNoteMeta,
+  getNotes,
+} from "../../utils/build";
 import { DendronCommonProps, NoteRouterQuery } from "../../utils/types";
+import {
+  DendronError,
+  error2PlainObject,
+  NoteProps,
+} from "@dendronhq/common-all";
 
 export type NotePageProps = InferGetStaticPropsType<typeof getStaticProps> &
-  DendronCommonProps;
+  DendronCommonProps & {
+    // `InferGetStaticPropsType` doesn't get right types for some reason, hence the manual override here
+    customHeadContent: string | null;
+    noteIndex: NoteProps;
+    note: NoteProps;
+  };
 
-export default function Note({ note, body, ...rest }: NotePageProps) {
+export default function Note({
+  note,
+  body,
+  collectionChildren,
+  noteIndex,
+  customHeadContent,
+  config,
+  ...rest
+}: NotePageProps) {
   const logger = createLogger("Note");
   const router = useRouter();
   const [bodyFromState, setBody] =
@@ -44,7 +73,7 @@ export default function Note({ note, body, ...rest }: NotePageProps) {
     // loaded page statically
     if (id === note.id) {
       dispatch(
-        browserEngineSlice.actions.setLoadingStatus(LoadingStatus.FUFILLED)
+        browserEngineSlice.actions.setLoadingStatus(LoadingStatus.FULFILLED)
       );
       logger.info({ ctx: "updateNoteBody:exit", id, state: "id = note.id" });
       return;
@@ -56,7 +85,7 @@ export default function Note({ note, body, ...rest }: NotePageProps) {
       const contents = await resp.text();
       setBody(contents);
       dispatch(
-        browserEngineSlice.actions.setLoadingStatus(LoadingStatus.FUFILLED)
+        browserEngineSlice.actions.setLoadingStatus(LoadingStatus.FULFILLED)
       );
     });
   }, [id]);
@@ -67,23 +96,33 @@ export default function Note({ note, body, ...rest }: NotePageProps) {
     return <DendronSpinner />;
   }
 
+  const maybeCollection = note.custom?.has_collection
+    ? collectionChildren.map((child: NoteProps) =>
+        DendronCollectionItem({ note: child, noteIndex })
+      )
+    : null;
+
   return (
     <>
-      <DendronSEO />
+      <DendronSEO note={note} config={config} />
+      {customHeadContent && <DendronCustomHead content={customHeadContent} />}
       <DendronNote noteContent={noteBody} />
+      {maybeCollection}
     </>
   );
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { notes } = getNotes();
+  const { notes, noteIndex } = getNotes();
+  const ids = _.reject(_.keys(notes), (id) => id === noteIndex.id);
   return {
-    paths: _.map(notes, (_note, id) => {
+    paths: _.map(ids, (id) => {
       return { params: { id } };
     }),
     fallback: false,
   };
 };
 
+// @ts-ignore
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
@@ -95,11 +134,28 @@ export const getStaticProps: GetStaticProps = async (
   if (!_.isString(id)) {
     throw Error("id required");
   }
-  const [body, note] = await Promise.all([getNoteBody(id), getNoteMeta(id)]);
-  return {
-    props: {
-      body,
-      note,
-    },
-  };
+
+  try {
+    const [body, note] = await Promise.all([getNoteBody(id), getNoteMeta(id)]);
+    const noteData = getNotes();
+    const customHeadContent: string | null = await getCustomHead();
+    const { notes, noteIndex } = noteData;
+    const collectionChildren = note.custom?.has_collection
+      ? prepChildrenForCollection(note, notes, noteIndex)
+      : null;
+
+    return {
+      props: {
+        note,
+        body,
+        noteIndex,
+        collectionChildren,
+        customHeadContent,
+        config: await getConfig(),
+      },
+    };
+  } catch (err) {
+    console.log(error2PlainObject(err as DendronError));
+    throw err;
+  }
 };
