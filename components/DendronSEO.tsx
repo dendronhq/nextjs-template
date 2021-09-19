@@ -1,15 +1,14 @@
 import {
-  DendronConfig,
-  DendronSiteConfig,
-  NoteProps,
-  NoteSEOProps,
   NoteUtils,
   Time,
+  NoteSEOProps,
+  DendronSiteConfig,
 } from "@dendronhq/common-all";
+import { verifyEngineSliceState } from "@dendronhq/common-frontend";
 import _ from "lodash";
 import { NextSeo } from "next-seo";
-import { useDendronRouter } from "../utils/hooks";
-import { getRootUrl } from "../utils/links";
+import { useEngineAppSelector } from "../features/engine/hooks";
+import { useDendronRouter, useNoteActive } from "../utils/hooks";
 
 const getCanonicalUrl = ({
   sitePath,
@@ -20,51 +19,40 @@ const getCanonicalUrl = ({
   seoProps: NoteSEOProps;
   siteConfig: DendronSiteConfig;
 }): string => {
-  // check for note specific overrides
   if (seoProps.canonicalBaseUrl) {
     return [siteConfig.siteUrl, sitePath].join("");
   }
   if (seoProps.canonicalUrl) {
     return seoProps.canonicalUrl;
   }
-
-  // apply canonical base
   const base = siteConfig.canonicalBaseUrl
     ? siteConfig.canonicalBaseUrl
-    : getRootUrl(siteConfig);
+    : siteConfig.siteUrl;
   // home page, no suffix
-  return [base, sitePath].join("");
+  const suffix = sitePath === "/" ? "" : ".html";
+  return [base, sitePath, suffix].join("");
 };
 
-export default function DendronSEO({
-  note,
-  config,
-}: {
-  note: NoteProps;
-  config: DendronConfig;
-}) {
+export default function DendronSEO() {
   const dendronRouter = useDendronRouter();
-  const path = dendronRouter.router.asPath;
-
-  // don't generate for following pages
-  if (
-    _.some(["403", "changelog"], (ent) => {
-      return path === `/notes/${ent}/`;
-    })
-  ) {
+  const engine = useEngineAppSelector((state) => state.engine);
+  const { noteActive } = useNoteActive(dendronRouter.getActiveNoteId());
+  if (!noteActive) {
     return null;
   }
-
-  const seoProps = NoteUtils.getSEOProps(note);
+  if (!verifyEngineSliceState(engine)) {
+    return null;
+  }
+  const { config } = engine;
+  const seoProps = NoteUtils.getSEOProps(noteActive);
   const title = seoProps.title;
   const description = seoProps.excerpt || config.site.description;
+  const path = dendronRouter.router.asPath;
   const canonical = getCanonicalUrl({
     sitePath: path,
     seoProps,
     siteConfig: config.site,
   });
-
-  console.log("BOND canonical", canonical);
   // @ts-ignore
   const unix2SEOTime = (ts: number) =>
     Time.DateTime.fromMillis(_.toInteger(ts))

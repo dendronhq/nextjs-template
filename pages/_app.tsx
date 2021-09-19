@@ -6,9 +6,8 @@ import {
 } from "@dendronhq/common-frontend";
 import "antd/dist/antd.css";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
-import { useDendronGATracking } from "../components/DendronGATracking";
 import DendronLayout from "../components/DendronLayout";
 import { combinedStore, useCombinedDispatch } from "../features";
 import { browserEngineSlice } from "../features/engine";
@@ -24,12 +23,16 @@ const themes = {
   light: getAssetUrl(`/light-theme.css`),
 };
 
-function AppContainer(appProps: AppProps) {
+function AppContainer({ Component, pageProps, router }: AppProps) {
   const defaultTheme = "light";
   return (
     <Provider store={combinedStore}>
       <ThemeSwitcherProvider themeMap={themes} defaultTheme={defaultTheme}>
-        <DendronApp {...appProps} />
+        <DendronApp
+          Component={Component}
+          pageProps={pageProps}
+          router={router}
+        />
       </ThemeSwitcherProvider>
     </Provider>
   );
@@ -40,23 +43,22 @@ function DendronApp({ Component, pageProps }: AppProps) {
   const logger = createLogger("App");
   const dendronRouter = useDendronRouter();
   const dispatch = useCombinedDispatch();
-  useDendronGATracking();
 
-  useEffect(() => {
-    (async () => {
-      setLogLevel("INFO");
-      logger.info({ ctx: "fetchNotes:pre" });
-      const data = await fetchNotes();
+  React.useEffect(() => {
+    setLogLevel("INFO");
+    logger.info({ ctx: "fetchNotes:pre" });
+    fetchNotes().then((data) => {
       logger.info({ ctx: "fetchNotes:got-data" });
       setNoteData(data);
       batch(() => {
         dispatch(browserEngineSlice.actions.setNotes(data.notes));
         dispatch(browserEngineSlice.actions.setNoteIndex(data.noteIndex));
       });
-      const config = await fetchConfig();
+    });
+    fetchConfig().then((data) => {
       logger.info({ ctx: "fetchConfig:got-data" });
-      dispatch(browserEngineSlice.actions.setConfig(config));
-    })();
+      dispatch(browserEngineSlice.actions.setConfig(data));
+    });
   }, []);
 
   logger.info({ ctx: "render" });
