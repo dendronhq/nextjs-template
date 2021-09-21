@@ -32,7 +32,7 @@ export const useDendronGATracking = () => {
         const newGaType = getGAType(gaTracking);
         initGA(gaTracking, newGaType);
         setGAType(newGaType);
-        logger.info({msg: "initialize ga", newGaType});
+        logger.info({ msg: "initialize ga", newGaType });
       }
     }
   }, [engine]);
