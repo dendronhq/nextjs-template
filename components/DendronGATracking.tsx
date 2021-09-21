@@ -29,9 +29,10 @@ export const useDendronGATracking = () => {
     if (!_.isUndefined(config)) {
       const { ga_tracking: gaTracking } = config.site;
       if (gaTracking && gaType === GAType.NONE && getStage() !== "dev") {
-        initGA(gaTracking, gaType);
-        setGAType(getGAType(gaTracking));
-        logger.info({msg: "initialize ga", gaType});
+        const newGaType = getGAType(gaTracking);
+        initGA(gaTracking, newGaType);
+        setGAType(newGaType);
+        logger.info({msg: "initialize ga", newGaType});
       }
     }
   }, [engine]);
