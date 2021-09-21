@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 export enum GAType {
   UNIVERSAL_ANALYTICS = "UNIVERSAL_ANALYTICS",
   G4A = "G4A",
-  NONE = "NONE"
+  NONE = "NONE",
 }
 
 const getGAType = (id: string) => {
@@ -16,7 +16,7 @@ const getGAType = (id: string) => {
     return GAType.UNIVERSAL_ANALYTICS;
   }
   return GAType.G4A;
-}
+};
 
 export const useDendronGATracking = () => {
   const [gaType, setGAType] = useState<GAType>(GAType.NONE);
