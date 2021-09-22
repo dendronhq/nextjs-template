@@ -63,6 +63,7 @@ export default function DendronSEO({
   const title = cleanSeoProps.title;
   const description = cleanSeoProps.excerpt;
   const images = cleanSeoProps?.image ? [cleanSeoProps.image] : [];
+  console.log("BOND", images);
   const canonical = getCanonicalUrl({
     sitePath: path,
     seoProps: cleanSeoProps,
