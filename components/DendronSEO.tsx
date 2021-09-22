@@ -2,9 +2,10 @@ import {
   DendronConfig,
   DendronSiteConfig,
   NoteProps,
-  NoteSEOProps,
+  SEOProps,
   NoteUtils,
   Time,
+  PublishUtils,
 } from "@dendronhq/common-all";
 import _ from "lodash";
 import { NextSeo, NextSeoProps } from "next-seo";
@@ -17,7 +18,7 @@ const getCanonicalUrl = ({
   siteConfig,
 }: {
   sitePath: string;
-  seoProps: NoteSEOProps;
+  seoProps: SEOProps;
   siteConfig: DendronSiteConfig;
 }): string => {
   // check for note specific overrides
@@ -55,13 +56,16 @@ export default function DendronSEO({
     return null;
   }
 
-  const seoProps = NoteUtils.getSEOProps(note);
-  const title = seoProps.title;
-  const description = seoProps.excerpt || config.site.description;
-  const images = seoProps?.image ? [seoProps.image] : [];
+  const siteSeoProps = PublishUtils.getSEOPropsFromConfig(config);
+  const noteSeoProps = PublishUtils.getSEOPropsFromNote(note);
+  const cleanSeoProps: SEOProps = _.defaults(noteSeoProps, siteSeoProps);
+
+  const title = cleanSeoProps.title;
+  const description = cleanSeoProps.excerpt;
+  const images = cleanSeoProps?.image ? [cleanSeoProps.image] : [];
   const canonical = getCanonicalUrl({
     sitePath: path,
-    seoProps,
+    seoProps: cleanSeoProps,
     siteConfig: config.site,
   });
   // @ts-ignore
@@ -70,9 +74,9 @@ export default function DendronSEO({
       .setZone("utc")
       // @ts-ignore
       .toLocaleString("yyyy-LL-dd");
-  const maybeTwitter: NextSeoProps["twitter"] = seoProps.twitter ? {
-    handle: seoProps.twitter,
-    site: seoProps.twitter,
+  const maybeTwitter: NextSeoProps["twitter"] = cleanSeoProps.twitter ? {
+    handle: cleanSeoProps.twitter,
+    site: cleanSeoProps.twitter,
     cardType: 'summary_large_image'
   }: undefined
   return (
@@ -80,8 +84,7 @@ export default function DendronSEO({
       title={title}
       description={description}
       canonical={canonical}
-      defaultTitle={config.site.title}
-      noindex={seoProps.noindex}
+      noindex={cleanSeoProps.noindex}
       twitter={maybeTwitter}
       openGraph={{
         title,
