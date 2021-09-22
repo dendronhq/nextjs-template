@@ -7,7 +7,7 @@ import {
   Time,
 } from "@dendronhq/common-all";
 import _ from "lodash";
-import { NextSeo } from "next-seo";
+import { NextSeo, NextSeoProps } from "next-seo";
 import { useDendronRouter } from "../utils/hooks";
 import { getRootUrl } from "../utils/links";
 
@@ -70,6 +70,11 @@ export default function DendronSEO({
       .setZone("utc")
       // @ts-ignore
       .toLocaleString("yyyy-LL-dd");
+  const maybeTwitter: NextSeoProps["twitter"] = seoProps.twitter ? {
+    handle: seoProps.twitter,
+    site: seoProps.twitter,
+    cardType: 'summary_large_image'
+  }: undefined
   return (
     <NextSeo
       title={title}
@@ -77,24 +82,7 @@ export default function DendronSEO({
       canonical={canonical}
       defaultTitle={config.site.title}
       noindex={seoProps.noindex}
-      additionalMetaTags={[
-        {
-          property: "dc:creator",
-          content: "Jane Doe",
-        },
-        {
-          name: "application-name",
-          content: "NextSeo",
-        },
-        {
-          httpEquiv: "x-ua-compatible",
-          content: "IE=edge; chrome=1",
-        },
-        {
-          name: "viewport",
-          content: "width=device-width, initial-scale=1.0",
-        },
-      ]}
+      twitter={maybeTwitter}
       openGraph={{
         title,
         description,
