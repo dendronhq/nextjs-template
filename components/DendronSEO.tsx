@@ -74,11 +74,13 @@ export default function DendronSEO({
       .setZone("utc")
       // @ts-ignore
       .toLocaleString("yyyy-LL-dd");
-  const maybeTwitter: NextSeoProps["twitter"] = cleanSeoProps.twitter ? {
-    handle: cleanSeoProps.twitter,
-    site: cleanSeoProps.twitter,
-    cardType: 'summary_large_image'
-  }: undefined
+  const maybeTwitter: NextSeoProps["twitter"] = cleanSeoProps.twitter
+    ? {
+        handle: cleanSeoProps.twitter,
+        site: cleanSeoProps.twitter,
+        cardType: "summary_large_image",
+      }
+    : undefined;
   return (
     <NextSeo
       title={title}
