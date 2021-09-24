@@ -25,6 +25,7 @@ import {
   getConfig,
   getCustomHead,
   getNoteBody,
+  getNoteBodyMD,
   getNoteMeta,
   getNotes,
 } from "../../utils/build";
@@ -34,6 +35,9 @@ import {
   error2PlainObject,
   NoteProps,
 } from "@dendronhq/common-all";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote";
+import { dendronPub, wikiLinks } from "@dendronhq/engine-server";
 
 export type NotePageProps = InferGetStaticPropsType<typeof getStaticProps> &
   DendronCommonProps & {
@@ -106,7 +110,7 @@ export default function Note({
     <>
       <DendronSEO note={note} config={config} />
       {customHeadContent && <DendronCustomHead content={customHeadContent} />}
-      <DendronNote noteContent={noteBody} />
+      <MDXRemote {...noteBody} />
       {maybeCollection}
     </>
   );
@@ -143,11 +147,15 @@ export const getStaticProps: GetStaticProps = async (
     const collectionChildren = note.custom?.has_collection
       ? prepChildrenForCollection(note, notes, noteIndex)
       : null;
+    const source = await getNoteBodyMD(note.id);
+    const mdxSource = await serialize(source, {
+      mdxOptions: { remarkPlugins: [wikiLinks, dendronPub] },
+    });
 
     return {
       props: {
         note,
-        body,
+        body: mdxSource,
         noteIndex,
         collectionChildren,
         customHeadContent,
