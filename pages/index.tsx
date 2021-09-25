@@ -6,25 +6,17 @@ import {
 } from "next";
 import React from "react";
 import DendronSEO from "../components/DendronSEO";
-import {
-  getConfig,
-  getNoteBody,
-  getNoteBodyMD,
-  getNotes,
-} from "../utils/build";
-import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote } from "next-mdx-remote";
+import { getConfig, getNoteBody, getNotes } from "../utils/build";
 
 export default function Home({
+  body,
   note,
   config,
-  source,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <DendronSEO note={note} config={config} />
-      MDXREMOTE
-      <MDXRemote {...source} />
+      <DendronNote noteContent={body} />
     </>
   );
 }
@@ -33,12 +25,11 @@ export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
   const note = getNotes().noteIndex;
-  const source = await getNoteBodyMD(note.id);
-  const mdxSource = await serialize(source);
+  const body = await getNoteBody(note.id);
   const config = await getConfig();
   return {
     props: {
-      source: mdxSource,
+      body,
       note,
       config,
     },

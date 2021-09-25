@@ -25,14 +25,6 @@ export function getNoteBody(id: string) {
   return body;
 }
 
-export function getNoteBodyMD(id: string) {
-  const dataDir = getDataDir();
-  const body = fs.readFile(path.join(dataDir, NOTE_BODY_DIR, `${id}.md`), {
-    encoding: "utf8",
-  });
-  return body;
-}
-
 let _NOTES_CACHE: NoteData | undefined;
 
 export function getNotes() {
