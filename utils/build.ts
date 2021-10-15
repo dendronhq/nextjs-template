@@ -1,6 +1,9 @@
 import fs from "fs-extra";
 import path from "path";
-import { IntermediateDendronConfig, NoteProps } from "@dendronhq/common-all";
+import {
+  IntermediateDendronConfig,
+  NoteProps,
+} from "@dendronhq/common-all";
 import _ from "lodash";
 import { NoteData } from "./types";
 
@@ -35,17 +38,6 @@ export function getNotes() {
     ) as NoteData;
   }
   return _NOTES_CACHE;
-}
-
-export function getNotePaths() {
-  const { notes, noteIndex } = getNotes();
-  const ids = _.reject(_.keys(notes), (id) => id === noteIndex.id);
-  return {
-    paths: _.map(ids, (id) => {
-      return { params: { id } };
-    }),
-    fallback: false,
-  };
 }
 
 export function getNoteMeta(id: string) {
