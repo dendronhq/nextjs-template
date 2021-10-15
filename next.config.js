@@ -1,5 +1,5 @@
 const path = require("path");
-const {FRONTEND_CONSTANTS} = require("@dendronhq/common-frontend");
+const {FRONTEND_CONSTANTS} = require("@dendronhq/common-frontend-v2");
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
