@@ -1,4 +1,4 @@
-import { TypedUseSelectorHook, useDispatch, useSelector, configureStore } from "@dendronhq/common-frontend";
+import { TypedUseSelectorHook, useDispatch, useSelector, configureStore } from "@dendronhq/common-frontend-v2";
 import { browserEngineSlice } from "./engine";
 
 const store = configureStore({
