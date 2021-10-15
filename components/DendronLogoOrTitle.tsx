@@ -1,4 +1,4 @@
-import { verifyEngineSliceState } from "@dendronhq/common-frontend";
+import { verifyEngineSliceState } from "@dendronhq/common-frontend-v2";
 import Link from "next/link";
 import path from "path";
 import React from "react";

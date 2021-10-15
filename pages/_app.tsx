@@ -3,7 +3,7 @@ import {
   createLogger,
   Provider,
   setLogLevel,
-} from "@dendronhq/common-frontend";
+} from "@dendronhq/common-frontend-v2";
 import "antd/dist/antd.css";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";

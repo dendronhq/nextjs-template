@@ -4,7 +4,7 @@ import { getStage } from "@dendronhq/common-all";
 import { useEngineAppSelector } from "../features/engine/hooks";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { createLogger } from "@dendronhq/common-frontend";
+import { createLogger } from "@dendronhq/common-frontend-v2";
 
 export enum GAType {
   UNIVERSAL_ANALYTICS = "UNIVERSAL_ANALYTICS",
