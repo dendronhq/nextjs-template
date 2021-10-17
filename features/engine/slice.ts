@@ -8,7 +8,7 @@ import {
   EngineSliceState,
   LoadingStatus,
   PayloadAction,
-} from "@dendronhq/common-frontend-v2";
+} from "@dendronhq/common-frontend";
 
 export type BrowserEngineSliceState = EngineSliceState & {
   noteIndex: NoteProps;

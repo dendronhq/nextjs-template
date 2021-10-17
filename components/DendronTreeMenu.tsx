@@ -1,5 +1,5 @@
 import { DownOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
-import { createLogger, TreeViewUtils } from "@dendronhq/common-frontend-v2";
+import { createLogger, TreeViewUtils } from "@dendronhq/common-frontend";
 import { Menu, Typography } from "antd";
 import _ from "lodash";
 import { DataNode } from "rc-tree/lib/interface";

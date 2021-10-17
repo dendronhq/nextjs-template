@@ -2,7 +2,7 @@ import {
   createLogger,
   ThemeUtils,
   TreeViewUtils,
-} from "@dendronhq/common-frontend-v2";
+} from "@dendronhq/common-frontend";
 import { Tree, TreeProps } from "antd";
 import _ from "lodash";
 import { DataNode } from "rc-tree/lib/interface";

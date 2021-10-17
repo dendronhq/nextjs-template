@@ -1,5 +1,5 @@
 import type { FuseNote, NoteProps } from "@dendronhq/common-all";
-import { LoadingStatus } from "@dendronhq/common-frontend-v2";
+import { LoadingStatus } from "@dendronhq/common-frontend";
 import { AutoComplete, Alert } from "antd";
 import React, { useEffect } from "react";
 import { useCombinedDispatch } from "../features";

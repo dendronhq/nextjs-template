@@ -1,5 +1,5 @@
 import { NoteIndexProps, NoteLookupUtils } from "@dendronhq/common-all";
-import { createLogger, LoadingStatus } from "@dendronhq/common-frontend-v2";
+import { createLogger, LoadingStatus } from "@dendronhq/common-frontend";
 import { AutoComplete } from "antd";
 import _ from "lodash";
 import React from "react";

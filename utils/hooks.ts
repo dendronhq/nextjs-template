@@ -1,5 +1,5 @@
 import { FuseEngine, NoteProps, NotePropsDict } from "@dendronhq/common-all";
-import { verifyEngineSliceState } from "@dendronhq/common-frontend-v2";
+import { verifyEngineSliceState } from "@dendronhq/common-frontend";
 import { Grid } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";

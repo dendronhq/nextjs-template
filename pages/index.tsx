@@ -1,4 +1,4 @@
-import { DendronNote } from "@dendronhq/common-frontend-v2";
+import { DendronNote } from "@dendronhq/common-frontend";
 import {
   GetStaticProps,
   GetStaticPropsContext,

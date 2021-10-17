@@ -3,7 +3,7 @@ import {
   createLogger,
   DendronNote,
   LoadingStatus,
-} from "@dendronhq/common-frontend-v2";
+} from "@dendronhq/common-frontend";
 import { Col, Row } from "antd";
 import _ from "lodash";
 import React from "react";
