@@ -1,6 +1,6 @@
 {
   "name": "@dendronhq/nextjs-template",
-  "version": "0.79.0",
+  "version": "0.80.0",
   "license": "Apache-2.0",
   "private": true,
   "repository": {
@@ -11,11 +11,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "buildCI": "echo nop",
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
     "sync:theme": "cp ../dendron-next-server/public/*theme.css public/",
-    "build:sitemap:ts": "tsc -p tsconfig.sitemap.json && mv dist/scripts/sitemap.js .",
+    "build:sitemap:ts": "tsc -b tsconfig.sitemap.json && mv dist/scripts/sitemap.js . --verbose",
     "build:sitemap": "next-sitemap --config sitemap.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
@@ -24,8 +25,8 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.7",
-    "@dendronhq/common-all": "^0.79.0",
-    "@dendronhq/common-frontend": "^0.79.0",
+    "@dendronhq/common-all": "^0.80.0",
+    "@dendronhq/common-frontend": "^0.80.0",
     "antd": "^4.15.5",
     "fs-extra": "^10.0.0",
     "html-react-parser": "^1.3.0",
