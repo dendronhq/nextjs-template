@@ -1,6 +1,7 @@
 /* eslint-disable */
 import {
   ConfigUtils,
+  DVault,
   IntermediateDendronConfig,
   NoteProps,
   RESERVED_KEYS,
@@ -18,7 +19,6 @@ const { Text, Link } = Typography;
 
 const ms2ShortDate = (ts: number) => {
   const dt = Time.DateTime.fromMillis(ts);
-  //@ts-ignore
   return dt.toLocaleString(Time.DateTime.DATE_SHORT);
 };
 
