@@ -59,7 +59,6 @@ export function prepChildrenForCollection(
 
 function ISO2FormattedDate(time: string, format: Intl.DateTimeFormatOptions) {
   const dt = DateTime.fromISO(time);
-  // @ts-ignore
   return dt.toLocaleString(format);
 }
 
@@ -70,6 +69,5 @@ function millisToJSDate(ts: number) {
 
 function millisToFormattedDate(ts: number, format: Intl.DateTimeFormatOptions) {
   const dt = DateTime.fromMillis(ts);
-  // @ts-ignore
   return dt.toLocaleString(format);
 }
