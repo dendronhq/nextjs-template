@@ -1637,10 +1637,10 @@
   resolved "https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
-"@dendronhq/common-all@^0.90.0":
-  version "0.90.0"
-  resolved "https://registry.npmjs.org/@dendronhq/common-all/-/common-all-0.90.0.tgz#306118e60861622a67e200bb098f7478eb2889d6"
-  integrity sha512-dwUcVvqgv4IF0/n0NN/vH1SJerk2i4tz8As3I2271OoLE4Qrqi6H/tb0GOTxZzL/ARVOv7XSBsWGqwgjOwx+Mw==
+"@dendronhq/common-all@^0.95.0":
+  version "0.95.0"
+  resolved "https://registry.npmjs.org/@dendronhq/common-all/-/common-all-0.95.0.tgz#71440491f0fdf5a75ad21c99285999ac5a056cc7"
+  integrity sha512-djZ+K9oP9/YfI5T4G37LdvZ5gOm1OA6wQXjZiKc8dpgo2BUyfIjmsAXIcuBZg4HhlQCuL1UV4kZHtrY6GVBCSw==
   dependencies:
     axios "^0.21.4"
     dropbox "^4.0.30"
@@ -1656,16 +1656,17 @@
     nanoid "^3.1.23"
     qs "^6.10.1"
     semver "^7.3.2"
+    spark-md5 "^3.0.2"
     title "^3.4.4"
     vscode-uri "^2.1.2"
 
-"@dendronhq/common-frontend@^0.90.0":
-  version "0.90.0"
-  resolved "https://registry.npmjs.org/@dendronhq/common-frontend/-/common-frontend-0.90.0.tgz#9e2b731bae7e6744e75a40dc94c74c58bc1f8f8b"
-  integrity sha512-QJWYsppH2jgqeM7Z63H3udCcEZkRp6YK0mJnIRJoN8EJVkthgmRRrs1vIFXETvHoqUqb1+1zdRR483PC2tMgVA==
+"@dendronhq/common-frontend@^0.95.0":
+  version "0.95.0"
+  resolved "https://registry.npmjs.org/@dendronhq/common-frontend/-/common-frontend-0.95.0.tgz#a30de96e19662afde86ab04d0d241d7be01456fa"
+  integrity sha512-vQ/3EQO1FNi8xzQunRuIdOdHrQwl4J3uitkRv5RvkoNBMvosfWYjUj1LBuZ+d+7vMGEthvglapS0l+NXXsrR3g==
   dependencies:
     "@aws-amplify/core" "^4.0.2"
-    "@dendronhq/common-all" "^0.90.0"
+    "@dendronhq/common-all" "^0.95.0"
     "@reduxjs/toolkit" "^1.5.1"
     antd "^4.15.4"
     lodash "^4.17.20"
@@ -1958,9 +1959,9 @@
   integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
 
 "@types/luxon@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/@types/luxon/-/luxon-2.3.1.tgz#e34763178b46232e4c5f079f1706e18692415519"
-  integrity sha512-nAPUltOT28fal2eDZz8yyzNhBjHw1NEymFBP7Q9iCShqpflWPybxHbD7pw/46jQmT+HXOy1QN5hNTms8MOTlOQ==
+  version "2.3.2"
+  resolved "https://registry.npmjs.org/@types/luxon/-/luxon-2.3.2.tgz#8a3f2cdd4858ce698b56cd8597d9243b8e9d3c65"
+  integrity sha512-WOehptuhKIXukSUUkRgGbj2c997Uv/iUgYgII8U7XLJqq9W2oF0kQ6frEznRQbdurioz+L/cdaIm4GutTQfgmA==
 
 "@types/node@*":
   version "16.3.3"
@@ -5170,6 +5171,11 @@ source-map@^0.5.0, source-map@^0.5.6:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
+
+spark-md5@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/spark-md5/-/spark-md5-3.0.2.tgz#7952c4a30784347abcee73268e473b9c0167e3fc"
+  integrity sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==
 
 spdx-correct@^3.0.0:
   version "3.1.1"
