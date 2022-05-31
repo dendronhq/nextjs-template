@@ -1637,10 +1637,10 @@
   resolved "https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
-"@dendronhq/common-all@^0.95.0":
-  version "0.95.0"
-  resolved "https://registry.npmjs.org/@dendronhq/common-all/-/common-all-0.95.0.tgz#71440491f0fdf5a75ad21c99285999ac5a056cc7"
-  integrity sha512-djZ+K9oP9/YfI5T4G37LdvZ5gOm1OA6wQXjZiKc8dpgo2BUyfIjmsAXIcuBZg4HhlQCuL1UV4kZHtrY6GVBCSw==
+"@dendronhq/common-all@^0.97.0":
+  version "0.97.0"
+  resolved "https://registry.npmjs.org/@dendronhq/common-all/-/common-all-0.97.0.tgz#ecddf5aed2d322880540b3e0de1d697e5723dc71"
+  integrity sha512-MwjWg9HrxpTgvWnWnhfzI2Y8hGJ8FzGfQFmZLRmC3gkvDLydXo784FmWWr7aswddc189im6AYTBanRw5iQ3O8A==
   dependencies:
     axios "^0.21.4"
     dropbox "^4.0.30"
@@ -1660,13 +1660,13 @@
     title "^3.4.4"
     vscode-uri "^2.1.2"
 
-"@dendronhq/common-frontend@^0.95.0":
-  version "0.95.0"
-  resolved "https://registry.npmjs.org/@dendronhq/common-frontend/-/common-frontend-0.95.0.tgz#a30de96e19662afde86ab04d0d241d7be01456fa"
-  integrity sha512-vQ/3EQO1FNi8xzQunRuIdOdHrQwl4J3uitkRv5RvkoNBMvosfWYjUj1LBuZ+d+7vMGEthvglapS0l+NXXsrR3g==
+"@dendronhq/common-frontend@^0.97.0":
+  version "0.97.0"
+  resolved "https://registry.npmjs.org/@dendronhq/common-frontend/-/common-frontend-0.97.0.tgz#e971f29924bf84a6dc84c728ca1eeb8fdb83a1ff"
+  integrity sha512-7hd31Zt6NC1NXqS//VfnlUgdSA8gkGxdiDRQN+dPB8vyXZ0UZhG01HK7UbRX5yj7Q4VuHq6Wc39QNOMsyZ9zZg==
   dependencies:
     "@aws-amplify/core" "^4.0.2"
-    "@dendronhq/common-all" "^0.95.0"
+    "@dendronhq/common-all" "^0.97.0"
     "@reduxjs/toolkit" "^1.5.1"
     antd "^4.15.4"
     lodash "^4.17.20"
