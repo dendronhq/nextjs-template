@@ -12,8 +12,7 @@ import {
 } from "@dendronhq/common-frontend";
 import { Col, Row } from "antd";
 import _ from "lodash";
-import dynamic from "next/dynamic";
-import React from "react";
+import React, { useRef } from "react";
 import { DendronCollectionItem } from "../components/DendronCollection";
 import DendronCustomHead from "../components/DendronCustomHead";
 import DendronSEO from "../components/DendronSEO";
@@ -45,6 +44,7 @@ export default function Note({
   customHeadContent,
   config,
 }: DendronNotePageProps) {
+  const initializedRef = useRef(false);
   const logger = createLogger("Note");
   const { getActiveNoteId } = useDendronRouter();
   const [bodyFromState, setBody] = React.useState<string | undefined>(
@@ -56,12 +56,15 @@ export default function Note({
   }
 
   React.useEffect(() => {
-    const BannerFile =
-      ConfigUtils.getPublishing(config).siteBanner === "custom"
-        ? "BannerAlert.tsx"
-        : "NoOp";
-    logger.info({ ctx: "loading banner", BannerFile });
-    BannerAlert = require(`../custom/${BannerFile}`).default;
+    if (!initializedRef.current) {
+      const BannerFile =
+        ConfigUtils.getPublishing(config).siteBanner === "custom"
+          ? "BannerAlert.tsx"
+          : "NoOp";
+      logger.info({ ctx: "loading banner", BannerFile });
+      BannerAlert = require(`../custom/${BannerFile}`).default;
+      initializedRef.current = true
+    }
   }, []);
 
   // --- Hooks
