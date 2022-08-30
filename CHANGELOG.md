@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.110.0 (2022-08-30)
+
+**Note:** Version bump only for package @dendronhq/nextjs-template
+
+
+
+
+
+## 0.109.1 (2022-08-25)
+
+**Note:** Version bump only for package @dendronhq/nextjs-template
+
+
+
+
+
+# 0.109.0 (2022-08-23)
+
+**Note:** Version bump only for package @dendronhq/nextjs-template
+
+
+
+
+
+# 0.108.0 (2022-08-16)
+
+
+### Bug Fixes
+
+* **views:** remove semicolon from preview ([#3383](https://github.com/dendronhq/dendron/issues/3383)) ([cd010cf](https://github.com/dendronhq/dendron/commit/cd010cf506613ec254c49383460be23e252f7842))
+
+
+
+
+
+# 0.107.0 (2022-08-09)
+
+
+### Bug Fixes
+
+* **views:** resolve issues with preview lock button ([#3353](https://github.com/dendronhq/dendron/issues/3353)) ([3e270dc](https://github.com/dendronhq/dendron/commit/3e270dcce338cc2c986d86902061d8a162d3f80e))
+
+
+
+
+
 # 0.106.0 (2022-08-02)
 
 **Note:** Version bump only for package @dendronhq/nextjs-template
