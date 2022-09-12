@@ -293,7 +293,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
->>>>>>> 066a479 (sync with 0.111.0 release)
 # 0.110.0 (2022-08-30)
 
 **Note:** Version bump only for package @dendronhq/nextjs-template
