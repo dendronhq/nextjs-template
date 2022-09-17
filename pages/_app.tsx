@@ -42,7 +42,7 @@ type PageProps = {
 }
 
 function AppContainer(appProps: AppProps & { pageProps: PageProps }) {
-  const { config } = appProps.pageProps;   
+  const { config } = appProps.pageProps;
   const logger = createLogger("AppContainer");
   useEffect(() => {
     const logLevel = getLogLevel();
@@ -93,6 +93,7 @@ function DendronApp({ Component, pageProps }: AppProps & { pageProps: PageProps 
   logger.info({ ctx: "render" });
 
   return (
+    // @ts-ignore
     <DendronProvider>
       <DendronLayout
         {...noteData}
