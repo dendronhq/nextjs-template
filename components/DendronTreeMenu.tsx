@@ -1,24 +1,12 @@
-import {
-  DownOutlined,
-  RightOutlined,
-  UpOutlined,
-  BookOutlined,
-  PlusOutlined,
-  NumberOutlined,
-} from "@ant-design/icons";
-import {
-  isNotUndefined,
-  TreeUtils,
-  TreeMenuNode,
-  TreeMenuNodeIcon,
-} from "@dendronhq/common-all";
-import { createLogger } from "@dendronhq/common-frontend";
+import { DownOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
+import { TreeUtils } from "@dendronhq/common-all";
+import { createLogger, TreeViewUtils } from "@dendronhq/common-frontend";
 import { Typography } from "antd";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { DataNode } from "rc-tree/lib/interface";
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useCombinedSelector } from "../features";
 import { DENDRON_STYLE_CONSTANTS } from "../styles/constants";
 import { useDendronRouter } from "../utils/hooks";
@@ -76,9 +64,10 @@ export default function DendronTreeMenu(
     return null;
   }
 
-  const roots = treeMenuNode2DataNode({
+  const roots: DataNode[] = TreeViewUtils.treeMenuNode2DataNode({
     roots: tree.roots,
     showVaultName: false,
+    applyNavExclude: true,
   });
 
   // --- Methods
@@ -101,15 +90,10 @@ export default function DendronTreeMenu(
     // open up
     if (expanded) {
       setActiveNoteIds(
-        TreeUtils.getAllParents({ child2parent: tree.child2parent, noteId })
+        TreeViewUtils.getAllParents({ notes, noteId }).slice(0, -1)
       );
     } else {
-      setActiveNoteIds(
-        TreeUtils.getAllParents({
-          child2parent: tree.child2parent,
-          noteId,
-        }).concat([noteId])
-      );
+      setActiveNoteIds(TreeViewUtils.getAllParents({ notes, noteId }));
     }
   };
 
@@ -148,7 +132,7 @@ function MenuView({
   activeNote: string;
 } & Partial<NoteData>) {
   const ExpandIcon = useCallback(
-    ({ isOpen }: { isOpen: boolean }) => {
+    ({ isOpen, ...rest }: { isOpen: boolean }) => {
       const UncollapsedIcon = isOpen ? UpOutlined : DownOutlined;
       const Icon = collapsed ? RightOutlined : UncollapsedIcon;
       return (
@@ -169,7 +153,6 @@ function MenuView({
     if (menu.children && menu.children.length > 0) {
       return (
         <SubMenu
-          // @ts-ignore
           icon={menu.icon}
           className={
             menu.key === activeNote ? "dendron-ant-menu-submenu-selected" : ""
@@ -193,7 +176,6 @@ function MenuView({
       );
     }
     return (
-      // @ts-ignore
       <MenuItem key={menu.key} icon={menu.icon}>
         <MenuItemTitle menu={menu} noteIndex={noteIndex!} />
       </MenuItem>
@@ -210,7 +192,6 @@ function MenuView({
         selectedKeys: [...expandKeys, activeNote],
       })}
       inlineIndent={DENDRON_STYLE_CONSTANTS.SIDER.INDENT}
-      // @ts-ignore
       expandIcon={ExpandIcon}
       inlineCollapsed={collapsed}
       // results in gray box otherwise when nav bar is too short for display
@@ -230,61 +211,14 @@ function MenuItemTitle(props: Partial<NoteData> & { menu: DataNode }) {
   const { getNoteUrl } = useDendronRouter();
 
   return (
-    // @ts-ignore
     <Typography.Text ellipsis={{ tooltip: props.menu.title }}>
       <Link
         href={getNoteUrl(props.menu.key as string, {
           noteIndex: props.noteIndex!,
         })}
       >
-        {/* @ts-ignore */}
         {props.menu.title}
       </Link>
     </Typography.Text>
   );
-}
-
-function treeMenuNode2DataNode({
-  roots,
-  showVaultName,
-}: {
-  roots: TreeMenuNode[];
-  showVaultName?: boolean;
-}): DataNode[] {
-  return roots
-    .map((node: TreeMenuNode) => {
-      let icon;
-      if (node.icon === TreeMenuNodeIcon.bookOutlined) {
-        icon = <BookOutlined />;
-      } else if (node.icon === TreeMenuNodeIcon.numberOutlined) {
-        icon = <NumberOutlined />;
-      } else if (node.icon === TreeMenuNodeIcon.plusOutlined) {
-        icon = <PlusOutlined />;
-      }
-
-      let title: any = node.title;
-      if (showVaultName) title = `${title} (${node.vaultName})`;
-
-      if (node.hasTitleNumberOutlined) {
-        title = (
-          <span>
-            <NumberOutlined />
-            {title}
-          </span>
-        );
-      }
-
-      return {
-        key: node.key,
-        title,
-        icon,
-        children: node.children
-          ? treeMenuNode2DataNode({
-            roots: node.children,
-            showVaultName,
-          })
-          : [],
-      };
-    })
-    .filter(isNotUndefined);
 }

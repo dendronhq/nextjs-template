@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEngineAppSelector } from "../features/engine/hooks";
 import { getNoteRouterQuery } from "./etc";
-import { fetchNoteBody } from "./fetchers";
+import { fetchNoteBody, fetchNotes } from "./fetchers";
 
 export type DendronRouterProps = ReturnType<typeof useDendronRouter>;
 
