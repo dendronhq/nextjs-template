@@ -152,7 +152,6 @@ function DendronSearchComponent(props: DendronCommonProps & SearchProps) {
   );
 
   const onSelect = useCallback(
-    // @ts-ignore
     (_selection, option) => {
       if (!noteIndex) {
         return;
