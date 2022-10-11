@@ -41,7 +41,6 @@ public/themes
 local
 
 # generated
-robots.txt
 sitemap.xml
 public/*.html
 dist
@@ -49,3 +48,6 @@ dist
 custom/*
 !custom/NoOp.tsx
 builds
+test-results/
+# migrated from packages/dendron-cli/src/utils/build.ts
+styles/scss/

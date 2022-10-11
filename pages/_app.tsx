@@ -2,6 +2,7 @@ import {
   ConfigUtils,
   CONSTANTS,
   IntermediateDendronConfig,
+  NoteProps,
   Theme,
 } from "@dendronhq/common-all";
 import {
@@ -14,15 +15,18 @@ import {
 import "antd/dist/antd.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
 import { useDendronGATracking } from "../components/DendronGATracking";
 import DendronLayout from "../components/DendronLayout";
+import { DendronRef } from "../components/DendronRef";
 import DendronProvider from "../context/DendronProvider";
 import { combinedStore, useCombinedDispatch } from "../features";
 import { browserEngineSlice } from "../features/engine";
+import { useIFrameHeightAdjuster } from "../hooks/useIFrameHeightAdjuster";
 import "../public/assets-dendron/css/light.css";
-import "../styles/scss/main.scss";
+import "../styles/scss/main-nextjs.scss";
 import { getLogLevel } from "../utils/etc";
 import { fetchConfig, fetchNotes, fetchTreeMenu } from "../utils/fetchers";
 import { useDendronRouter } from "../utils/hooks";
@@ -35,17 +39,35 @@ const themes: { [key in Theme]: string } = {
   custom: getAssetUrl(`/themes/${CONSTANTS.CUSTOM_THEME_CSS}`),
 };
 
-function AppContainer(appProps: AppProps) {
-  const { config } = appProps.pageProps as {
-    config: IntermediateDendronConfig;
-  };
+type PageProps = {
+  noteIndex: NoteProps;
+  config: IntermediateDendronConfig;
+  body?: string;
+};
+
+function AppContainer(appProps: AppProps & { pageProps: PageProps }) {
+  const { config } = appProps.pageProps;
   const logger = createLogger("AppContainer");
   useEffect(() => {
     const logLevel = getLogLevel();
     setLogLevel(logLevel);
   }, []);
+
+  const router = useRouter();
+
   const defaultTheme = ConfigUtils.getPublishing(config).theme || Theme.LIGHT;
   logger.info({ ctx: "enter", defaultTheme });
+  const body = appProps.pageProps.body ?? "";
+  if (router.pathname === "/refs/[id]") {
+    return (
+      <Provider store={combinedStore}>
+        <ThemeSwitcherProvider themeMap={themes} defaultTheme={defaultTheme}>
+          <DendronRef body={body} />
+        </ThemeSwitcherProvider>
+      </Provider>
+    );
+  }
+
   return (
     <Provider store={combinedStore}>
       <ThemeSwitcherProvider themeMap={themes} defaultTheme={defaultTheme}>
@@ -55,12 +77,16 @@ function AppContainer(appProps: AppProps) {
   );
 }
 
-function DendronApp({ Component, pageProps }: AppProps) {
+function DendronApp({
+  Component,
+  pageProps,
+}: AppProps & { pageProps: PageProps }) {
   const [noteData, setNoteData] = useState<NoteData>();
   const logger = createLogger("App");
   const dendronRouter = useDendronRouter();
   const dispatch = useCombinedDispatch();
   useDendronGATracking();
+  useIFrameHeightAdjuster();
 
   useEffect(() => {
     (async () => {
@@ -89,6 +115,7 @@ function DendronApp({ Component, pageProps }: AppProps) {
   logger.info({ ctx: "render" });
 
   return (
+    // @ts-ignore
     <DendronProvider>
       <DendronLayout
         {...noteData}
@@ -96,7 +123,7 @@ function DendronApp({ Component, pageProps }: AppProps) {
         dendronRouter={dendronRouter}
       >
         <Head>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href={getAssetUrl("/favicon.ico")} />
         </Head>
         <Component
           {...pageProps}

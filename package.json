@@ -1,6 +1,6 @@
 {
   "name": "@dendronhq/nextjs-template",
-  "version": "0.111.0",
+  "version": "0.115.0",
   "license": "Apache-2.0",
   "private": true,
   "repository": {
@@ -10,30 +10,34 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run copy:robotstxt && next build",
     "buildCI": "echo nop",
     "start": "next start",
     "lint": "next lint",
-    "export": "next build && next export",
-    "sync:theme": "cp ../common-assets/public/*theme.css public/",
+    "export": "npm run build && next export",
     "build:sitemap:ts": "tsc -p tsconfig.sitemap.json && mv dist/scripts/sitemap.js . ",
     "build:sitemap": "next-sitemap --config sitemap.js",
     "clean": "yarn rimraf public data out",
+    "copy:robotstxt": "cpx assets/robots.txt public/",
     "rimraf": "npx rimraf",
-    "test": "playwright test",
-    "test:skipbuild": "SKIP_BUILD=1 playwright test"
+    "test": "NODE_ENV=test playwright test",
+    "test:skipbuild": "SKIP_BUILD=1 yarn test"
+  },
+  "overrides": {
+    "trim": "0.0.3",
+    "@types/react": "17.0.39"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.6.7",
-    "@dendronhq/common-all": "^0.111.0",
-    "@dendronhq/common-frontend": "^0.111.0",
+    "@dendronhq/common-all": "^0.115.0",
+    "@dendronhq/common-frontend": "^0.115.0",
     "@giscus/react": "^2.2.0",
     "antd": "^4.15.5",
     "fs-extra": "^10.0.0",
     "html-react-parser": "^1.3.0",
+    "import-fresh": "^3.3.0",
     "lodash": "^4.17.21",
     "luxon": "^1.25.0",
-    "next": "12.1.0",
+    "next": "^12.3.0",
     "next-seo": "^4.27.0",
     "next-sitemap": "1.8.11",
     "react": "^17.0.2",
@@ -42,14 +46,16 @@
     "react-ga": "^3.3.0",
     "react-ga4": "^1.0.6",
     "react-redux": "^7.2.3",
-    "sass": "^1.41.1"
+    "sass": "^1.41.1",
+    "zod": "3.19.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^11.1.2",
-    "@playwright/test": "^1.18.1",
+    "@playwright/test": "^1.26.0",
     "@types/fs-extra": "^9.0.12",
     "@types/luxon": "^2.3.1",
-    "@types/react": "^17.0.21",
+    "@types/react": "^17.0.39",
+    "cpx": "^1.5.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "^11.1.2",
     "har-validator": "^5.1.5",

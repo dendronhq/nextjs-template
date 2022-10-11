@@ -7,7 +7,6 @@
 
 .main-content {
   line-height: $content-line-height;
-  font-size: $root-font-size;
 
   /* to protect the layout to break from long words */
   overflow-wrap: break-word;
@@ -98,7 +97,7 @@
         position: absolute;
         margin-left: -1.4em;
         color: $grey-dk-000;
-        content: "•";
+        content: none;
       }
     }
   }
@@ -151,38 +150,12 @@
   }
 
   .anchor-heading {
-    // Push the anchor icon to the left, into the gutter
-    position: absolute;
-    left: -$sp-4;
-    // Make the icons the same size regardless of the size of the size of the
-    // container they are in
-    font-size: 1rem;
-    // Anchors headings become visible when the item they are attached to is
-    // hovered over. We do that using opacity.
-    transition: all 0.2s ease;
-    opacity: 1;
-    color: inherit;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    // Align the anchor to the middle of the heading
-    display: flex;
-    align-items: center;
-
-    .anchor-heading {
-      // headings can fit a slightly bigger icon
-      font-size: 1.2rem;
-      left: -$sp-5;
-    }
+    user-select: none;
+    color: rgba(0,0,0,0.5);
   }
 
   // Make the anchor icons invisible until the user hovers over them
-  *:not(:hover) .anchor-heading {
+  *:not(:hover) > .anchor-heading {
     opacity: 0;
   }
 
@@ -214,13 +187,6 @@
     + p {
       margin-top: 0;
     }
-  }
-
-  table,
-  td,
-  th {
-    border: 1px solid black;
-    padding: 10px;
   }
 }
 
@@ -258,3 +224,4 @@ a.fn {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+

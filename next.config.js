@@ -1,9 +1,10 @@
-const path = require("path");
-const process = require("process");
-const { FRONTEND_CONSTANTS } = require("@dendronhq/common-frontend");
+const { env } = require('./env/server')
 
-const { NEXT_PUBLIC_ASSET_PREFIX, BUILD_DIR, DATA_DIR, PUBLIC_DIR } = process.env;
-const isProd = process.env.NODE_ENV === "production";
+// throws if validation fails
+require('./utils/validation')
+
+const { NEXT_PUBLIC_ASSET_PREFIX, BUILD_DIR, DATA_DIR, PUBLIC_DIR } = env;
+const isProd = process.env.NODE_ENV !== "development";
 
 // NOTE: __dirname is the dirname where this configuration file is located
 const payload = {
@@ -14,10 +15,11 @@ const payload = {
   assetPrefix:
     isProd && NEXT_PUBLIC_ASSET_PREFIX ? NEXT_PUBLIC_ASSET_PREFIX : undefined,
   env: {
-    DATA_DIR: DATA_DIR || path.join(__dirname, FRONTEND_CONSTANTS.DEFAULT_DATA_DIR),
-    PUBLIC_DIR: PUBLIC_DIR || path.join(__dirname, "public"),
+    DATA_DIR,
+    PUBLIC_DIR,
   },
   distDir: BUILD_DIR || '.next',
+  swcMinify: true,
 };
 
 if (!isProd && process.env.ANALYZE) {

@@ -12,15 +12,18 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEngineAppSelector } from "../features/engine/hooks";
 import { getNoteRouterQuery } from "./etc";
-import { fetchNoteBody, fetchNotes } from "./fetchers";
+import { fetchNoteBody } from "./fetchers";
 
 export type DendronRouterProps = ReturnType<typeof useDendronRouter>;
 
 export function useDendronRouter() {
   const router = useRouter();
   const query = getNoteRouterQuery(router);
-  const getNoteUrl = (id: string, opts: { noteIndex: NoteProps }) => {
-    if (id === opts.noteIndex.id) {
+  const getNoteUrl = (
+    id: string,
+    opts: { noteIndex: NoteProps | undefined }
+  ) => {
+    if (id === opts?.noteIndex?.id) {
       return `/`;
     }
     return `/notes/${id}`;

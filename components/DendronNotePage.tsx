@@ -104,9 +104,13 @@ export default function Note({
 
   const maybeCollection =
     note.custom?.has_collection && !_.isNull(collectionChildren)
-      ? collectionChildren.map((child: NoteProps) =>
-          DendronCollectionItem({ note: child, noteIndex })
-        )
+      ? collectionChildren.map((child: NoteProps) => (
+          <DendronCollectionItem
+            key={child.id}
+            note={child}
+            noteIndex={noteIndex}
+          />
+        ))
       : null;
 
   return (
@@ -119,7 +123,7 @@ export default function Note({
           <Row gutter={20}>
             <Col xs={24} md={18}>
               {BannerAlert && <BannerAlert />}
-              <DendronNote noteContent={noteBody} config={config} />
+              <DendronNote noteContent={noteBody} />
               {maybeCollection}
               <DendronNoteGiscusWidget note={note} config={config} />
             </Col>
