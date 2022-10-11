@@ -18,7 +18,7 @@
     "build:sitemap:ts": "tsc -p tsconfig.sitemap.json && mv dist/scripts/sitemap.js . ",
     "build:sitemap": "next-sitemap --config sitemap.js",
     "clean": "yarn rimraf public data out",
-    "copy:robotstxt": "cpx assets/robots.txt public/",
+    "copy:robotstxt": "npx cpx assets/robots.txt public/",
     "rimraf": "npx rimraf",
     "test": "NODE_ENV=test playwright test",
     "test:skipbuild": "SKIP_BUILD=1 yarn test"
