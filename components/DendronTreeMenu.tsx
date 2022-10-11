@@ -162,6 +162,7 @@ function MenuView({
   const createMenu = (menu: DataNode) => {
     if (menu.children && menu.children.length > 0) {
       return (
+        // @ts-ignore
         <SubMenu
           // @ts-ignore
           icon={menu.icon}
@@ -204,6 +205,7 @@ function MenuView({
   };
 
   return (
+    // @ts-ignore
     <Menu
       key={String(collapsed)}
       className="dendron-tree-menu"
