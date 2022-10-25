@@ -1,6 +1,6 @@
 {
   "name": "@dendronhq/nextjs-template",
-  "version": "0.115.0",
+  "version": "0.116.1",
   "license": "Apache-2.0",
   "private": true,
   "repository": {
@@ -24,8 +24,8 @@
     "test:skipbuild": "SKIP_BUILD=1 yarn test"
   },
   "dependencies": {
-    "@dendronhq/common-all": "^0.115.0",
-    "@dendronhq/common-frontend": "^0.115.0",
+    "@dendronhq/common-all": "^0.116.1",
+    "@dendronhq/common-frontend": "^0.116.1",
     "@giscus/react": "^2.2.0",
     "antd": "^4.15.5",
     "fs-extra": "^10.0.0",
@@ -42,8 +42,7 @@
     "react-ga": "^3.3.0",
     "react-ga4": "^1.0.6",
     "react-redux": "^7.2.3",
-    "sass": "^1.41.1",
-    "zod": "3.19.1"
+    "sass": "^1.41.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^11.1.2",

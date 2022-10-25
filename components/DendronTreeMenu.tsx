@@ -1,18 +1,18 @@
 import {
   DownOutlined,
+  NumberOutlined,
+  PlusOutlined,
   RightOutlined,
   UpOutlined,
-  PlusOutlined,
-  NumberOutlined,
 } from "@ant-design/icons";
-import { isNotUndefined, TreeUtils, TreeMenuNode } from "@dendronhq/common-all";
+import { isNotUndefined, TreeMenuNode, TreeUtils } from "@dendronhq/common-all";
 import { createLogger } from "@dendronhq/common-frontend";
 import { Typography } from "antd";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { DataNode } from "rc-tree/lib/interface";
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCombinedSelector } from "../features";
 import { DENDRON_STYLE_CONSTANTS } from "../styles/constants";
 import { useDendronRouter } from "../utils/hooks";
@@ -61,6 +61,7 @@ export default function DendronTreeMenu(
     });
 
     setActiveNoteIds(newActiveNoteIds);
+    return undefined;
   }, [props.noteIndex, dendronRouter.query.id, noteActiveId, tree]);
 
   const { notes, collapsed, setCollapsed } = props;
