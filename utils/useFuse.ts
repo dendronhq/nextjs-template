@@ -28,7 +28,9 @@ function useFuse(
   const [loading, setLoading] = useState<boolean>(false);
   const [fuse, setFuse] = useState<FuseNote>();
   const dendronConfig = useDendronConfig();
-  const fuzzThreshold = dendronConfig ? ConfigUtils.getLookup(dendronConfig).note.fuzzThreshold : 0.6;
+  const fuzzThreshold = dendronConfig
+    ? ConfigUtils.getLookup(dendronConfig).note.fuzzThreshold
+    : 0.6;
 
   useEffect(() => {
     if (_.isUndefined(fuse)) {
